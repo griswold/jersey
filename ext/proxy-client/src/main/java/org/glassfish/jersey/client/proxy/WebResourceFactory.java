@@ -39,20 +39,7 @@
  */
 package org.glassfish.jersey.client.proxy;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.AnnotatedElement;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Proxy;
-import java.lang.reflect.Type;
-import java.security.AccessController;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import org.glassfish.jersey.internal.util.ReflectionHelper;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.CookieParam;
@@ -75,8 +62,20 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
-
-import org.glassfish.jersey.internal.util.ReflectionHelper;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Proxy;
+import java.lang.reflect.Type;
+import java.security.AccessController;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Factory for client-side representation of a resource.
@@ -246,6 +245,9 @@ public final class WebResourceFactory implements InvocationHandler {
                             for (Object v : ((Collection) value)) {
                                 form.param(((FormParam) ann).value(), v.toString());
                             }
+                        }
+                        else {
+                            form.param(((FormParam) ann).value(), value.toString());
                         }
                     }
                 }
